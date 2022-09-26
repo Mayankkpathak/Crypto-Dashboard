@@ -1,8 +1,13 @@
-
+import { useState } from 'react'
 import ExchangeRate from './ExchangeRate' 
 
 const CurrencyConverter = () => {
   const currencies = ['BTC', 'ETH', 'USD', 'XRP', 'LTC', 'ADA']
+  const [chosenPrimaryCurrency, setChosenPrimaryCurrency] = useState('BTC')
+  const [chosenSecondaryCurrency, setChosenSecondaryCurrency] = useState('BTC')
+  const [amount,setAmount]= useState(1)
+
+  console.log(amount)
 
 
   return (
@@ -18,15 +23,17 @@ const CurrencyConverter = () => {
           <td>
             <input
              type="number"
-             name="currency-number-1"
-             value={""}
+             name="currency-amount-1"
+             value={amount}
+             onChange={(e) => setAmount(e.target.value)}
             />
           </td>
           <td>
             <select
-            value={""}
+            value={chosenPrimaryCurrency}
             name="currency-option-1"
             className="currency-options"
+            onChange={(e) => setChosenPrimaryCurrency(e.target.value)}
             >
               {currencies.map((currency, _index) => (<option key={_index}>{currency}</option>))}
             </select>
@@ -43,9 +50,10 @@ const CurrencyConverter = () => {
           </td>
           <td>
             <select
-            value={""}
+            value={chosenSecondaryCurrency}
             name="currency-option-2"
-            classNmae="currency-options"
+            className="currency-options"
+            onChange={(e) => setChosenSecondaryCurrency(e.target.value)}
             >
               {currencies.map((currency, _index) => (<option key={_index}>{currency}</option>))}
             </select>
