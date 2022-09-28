@@ -11,7 +11,7 @@ const options = {
   method: 'GET',
   url: 'https://crypto-news-live3.p.rapidapi.com/news',
   headers: {
-    'X-RapidAPI-Key': '0cffbe51f9msh0529a1b15df46dep1bf40cjsn34b535b508bd',
+    'X-RapidAPI-Key': process.env.REACT_APP_RAPID_API_KEY,
     'X-RapidAPI-Host': 'crypto-news-live3.p.rapidapi.com'
   }
 }

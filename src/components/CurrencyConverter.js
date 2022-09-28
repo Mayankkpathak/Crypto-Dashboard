@@ -8,6 +8,8 @@ const CurrencyConverter = () => {
   const [chosenSecondaryCurrency, setChosenSecondaryCurrency] = useState('BTC')
   const [amount,setAmount]= useState(1)
   const [exchangeRate, setExchangeRate] = useState(0)
+  const [primaryCurrencyExchanged, setPrimaryCurrencyExchanged] = useState('BTC')
+  const [secondaryCurrencyExchanged, setSecondaryCurrencyExchanged] = useState('BTC')
   const [result, setResult] = useState(0)
 
   console.log(amount)
@@ -20,22 +22,23 @@ const options = {
   url: 'https://alpha-vantage.p.rapidapi.com/query',
   params: {from_currency: chosenPrimaryCurrency, function: 'CURRENCY_EXCHANGE_RATE', to_currency: chosenSecondaryCurrency},
   headers: {
-    'X-RapidAPI-Key': '0cffbe51f9msh0529a1b15df46dep1bf40cjsn34b535b508bd',
+    'X-RapidAPI-Key': process.env.REACT_APP_RAPID_API_KEY,
     'X-RapidAPI-Host': 'alpha-vantage.p.rapidapi.com'
   }
-};
+}
 
 axios.request(options).then((response) => {
 	console.log(response.data['Realtime Currency Exchange Rate']['5. Exchange Rate'])
   setExchangeRate(response.data['Realtime Currency Exchange Rate']['5. Exchange Rate'])
-  setResult(response.data['Realtime Currency Exchange Rate']['5. Exchange Rate'])
+  setResult(response.data['Realtime Currency Exchange Rate']['5. Exchange Rate'] * amount)
+  setPrimaryCurrencyExchanged(chosenPrimaryCurrency)
+  setSecondaryCurrencyExchanged(chosenSecondaryCurrency)
 }).catch((error) => {
 	console.error(error)
 })
   }
 
-
-  console.log(exchangeRate)
+  
   return (
     <div className="currency-converter">
     <h2>Currency Converter</h2>
@@ -96,8 +99,9 @@ axios.request(options).then((response) => {
    
      <ExchangeRate
       exchangeRate={exchangeRate}
-      chosenPrimaryCurrency={chosenPrimaryCurrency}
-      chosenSecondaryCurrency={chosenSecondaryCurrency}
+      chosenPrimaryCurrency={primaryCurrencyExchanged}
+      chosenSecondaryCurrency={secondaryCurrencyExchanged}
+ 
      />
     </div>
   )
